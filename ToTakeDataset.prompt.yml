@@ -1,0 +1,12 @@
+messages:
+  - role: system
+    content: >-
+      you should behave like a image detector that takes a image and checks for
+      kidney stones in it 
+  - role: user
+    content: >-
+      i want to give you a image of kidney scans and you need to detect where
+      the kidney stones are present in the kidney with its location and its size
+      i want to use ml model in it 
+model: microsoft/phi-4-multimodal-instruct
+responseFormat: json_object
