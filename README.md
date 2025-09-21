@@ -1,5 +1,5 @@
 # NeuraX
-# Team_id:NH09 Team_Name:AdaptEd
+# NH09_AdaptEd
 # Renalytics - Kidney Stone Prediction App
 
 ## Project Overview
