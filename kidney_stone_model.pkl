@@ -1,0 +1,78 @@
+# app.py (The server-side code)
+
+import pickle
+import cv2
+import numpy as np
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# --- Step 1: Load the Pre-trained Model ---
+# This model includes the logic for detection, location, and size
+try:
+    with open('kidney_stone_model.pkl', 'rb') as f:
+        model = pickle.load(f)
+    print("Model loaded successfully!")
+except FileNotFoundError:
+    print("Error: kidney_stone_model.pkl not found. Please train the model first.")
+    model = None
+
+# --- Step 2: The Prediction Function ---
+def predict_stone(image):
+    if model is None:
+        return None, "Model not available"
+
+    # Pre-process the image for the model
+    processed_image = preprocess(image)
+    
+    # --- Step 3: Run the Prediction ---
+    # This step will vary depending on your model (Object Detection vs. Segmentation)
+    # The model predicts bounding boxes or a segmentation mask
+    predictions = model(processed_image)
+    
+    # --- Step 4: Calculate Location and Size ---
+    # This is where you process the model's output
+    detected_stones = []
+    # Loop through each detected stone
+    for p in predictions:
+        # Get location (e.g., center point or bounding box coordinates)
+        x, y, w, h = p.get_bounding_box()
+        location = {"x": int(x), "y": int(y)}
+
+        # Calculate size (e.g., area of the bounding box)
+        size_cm = calculate_size_from_pixels(w, h)
+        
+        detected_stones.append({
+            "location": location,
+            "size_cm": round(size_cm, 2)
+        })
+
+    return detected_stones, None
+
+# --- Step 5: The API Endpoint ---
+@app.route('/predict_image', methods=['POST'])
+def predict():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part in the request"}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    try:
+        # Read the image from the request
+        nparr = np.frombuffer(file.read(), np.uint8)
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+        # Call the prediction function
+        detections, error = predict_stone(img)
+        if error:
+            return jsonify({"error": error}), 500
+
+        return jsonify({"detections": detections}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
