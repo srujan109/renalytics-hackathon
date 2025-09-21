@@ -19,8 +19,8 @@ The application leverages a machine learning model to analyze key physiological 
 
 - **Frontend**: HTML, CSS
 - **Backend**: Python, Flask
-- **Machine Learning**: scikit-learn, NumPy
-- **Deployment**: Render (or similar platforms like Heroku)
+- **Machine Learning**: scikit-learn, NumPy, U-Net
+- **Deployment**: Render and Bolt AI
 
 ## Project Architecture & Data Flow
 
