@@ -96,5 +96,4 @@ This project is configured for easy deployment on a cloud platform like Render. 
 - **Dataset Source**: [If you used a public dataset, link to it here]
 - **Special Thanks**: [Any other credits, e.g., to the hackathon organizers]
 
----
-_Note: The `kidney_stone_model.pkl` file must be included in the repository for the application to function correctly._
+--- 
