@@ -90,10 +90,4 @@ This project is configured for easy deployment on a cloud platform like Render. 
 - **Build Command**: `pip install -r requirements.txt`
 - **Start Command**: `gunicorn --bind 0.0.0.0:$PORT app:app`
 
-## Credits
-
-- **Developer**: Srujan
-- **Dataset Source**: [If you used a public dataset, link to it here]
-- **Special Thanks**: [Any other credits, e.g., to the hackathon organizers]
-
 --- 
