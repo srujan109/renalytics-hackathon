@@ -1,6 +1,6 @@
 # NeuraX
 # NH09_AdaptEd
-# Renalytics - Kidney Stone Prediction App
+# Renalytics - Kidney Stone Prediction Website
 
 ## Project Overview
 
